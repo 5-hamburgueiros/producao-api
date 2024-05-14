@@ -11,6 +11,7 @@ export namespace IFindAllItens {
   export type Params = {
     nome?: string;
     categoria?: CategoriaItem;
+    ids?: Array<string>;
   };
 
   export type Result = Array<ItemEntity>;

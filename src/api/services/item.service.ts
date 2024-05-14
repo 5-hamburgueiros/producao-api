@@ -22,6 +22,7 @@ export class ItemService implements IItemService {
     query: {
       nome?: string;
       categoria?: CategoriaItem;
+      ids?: Array<string>;
     },
   ): Promise<Pagination<ItemModelTypeOrm>> {
     const queryBuilder = this.repository.createQueryBuilder('item');
@@ -37,6 +38,19 @@ export class ItemService implements IItemService {
       queryBuilder
         .andWhere('item.categoria = :categoria', {
           categoria: query.categoria,
+        })
+        .getMany();
+    }
+    if (query.ids) {
+      let buscaIds: Array<any>;
+      if (Array.isArray(query.ids)) {
+        buscaIds = query.ids;
+      } else {
+        buscaIds = new Array(query.ids);
+      }
+      queryBuilder
+        .andWhere('item.id in (:...ids)', {
+          ids: buscaIds,
         })
         .getMany();
     }

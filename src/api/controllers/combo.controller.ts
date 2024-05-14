@@ -50,6 +50,11 @@ export class ComboController {
     required: false,
   })
   @ApiQuery({
+    name: 'ids',
+    type: Array,
+    required: false,
+  })
+  @ApiQuery({
     name: 'limit',
     required: false,
   })
@@ -61,6 +66,7 @@ export class ComboController {
   @ApiOkResponsePaginated(ComboEntity)
   async list(
     @Query('nome') nome: string,
+    @Query('ids') ids: Array<string>,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
   ): Promise<Pagination<ComboModelTypeOrm>> {
@@ -73,6 +79,7 @@ export class ComboController {
       },
       {
         nome,
+        ids,
       },
     );
   }

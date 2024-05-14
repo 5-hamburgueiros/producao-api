@@ -59,6 +59,11 @@ export class ItemController {
     name: 'limit',
     required: false,
   })
+  @ApiQuery({
+    name: 'ids',
+    type: Array,
+    required: false,
+  })
   @UseGuards()
   @AllowAnonymous()
   @ApiSecurity('bearer')
@@ -67,6 +72,7 @@ export class ItemController {
   @ApiOkResponsePaginated(ItemEntity)
   async list(
     @Query('nome') nome: string,
+    @Query('ids') ids: Array<string>,
     @Query('categoria') categoria: CategoriaItem,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit = 10,
@@ -81,6 +87,7 @@ export class ItemController {
       {
         categoria,
         nome,
+        ids,
       },
     );
   }

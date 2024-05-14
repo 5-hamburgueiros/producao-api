@@ -20,6 +20,7 @@ export class ComboService implements IComboService {
     options: IPaginationOptions,
     query: {
       nome?: string;
+      ids?: Array<string>;
     },
   ): Promise<Pagination<ComboModelTypeOrm>> {
     const queryBuilder = this.repository.createQueryBuilder('combo');
@@ -28,6 +29,19 @@ export class ComboService implements IComboService {
       queryBuilder
         .andWhere('combo.nome ilike :nome', {
           nome: `%${query.nome}%`,
+        })
+        .getMany();
+    }
+    if (query.ids) {
+      let buscaIds: Array<any>;
+      if (Array.isArray(query.ids)) {
+        buscaIds = query.ids;
+      } else {
+        buscaIds = new Array(query.ids);
+      }
+      queryBuilder
+        .andWhere('combo.id in (:...ids)', {
+          ids: buscaIds,
         })
         .getMany();
     }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { ComboEntity } from '../entities';
 
 export interface IComboRepository {

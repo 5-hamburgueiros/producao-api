@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import { AbstractEntity } from './abstract.entity';
 import { ItemEntity } from './item.entity';
 
