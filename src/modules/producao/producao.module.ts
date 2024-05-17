@@ -1,6 +1,8 @@
 import { ProducaoController } from '@/api/controllers/producao.contoller';
 import { JwtGuard } from '@/api/middlewares/auth-guard.strategy';
 import { JwtStrategy } from '@/api/middlewares/jwt.strategy';
+import { IProducaoRepository } from '@/domain/repository';
+import { ProducaoRepositoryTypeOrm } from '@/infra/repository/typeorm';
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { PassportModule } from '@nestjs/passport';
@@ -13,10 +15,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [ProducaoController],
   providers: [
-    // {
-    //   provide: IItemRepository,
-    //   useClass: ItemRepositoryTypeOrm,
-    // },
+    {
+      provide: IProducaoRepository,
+      useClass: ProducaoRepositoryTypeOrm,
+    },
     JwtStrategy,
     { provide: APP_GUARD, useClass: JwtGuard },
   ],

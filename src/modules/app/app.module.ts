@@ -22,10 +22,6 @@ import { SeedModule } from '../seed/seed.module';
     }),
     TypeOrmModule.forFeature(typeOrmEntities),
     HealthModule,
-
-    // BullModule.forRootAsync({
-    //   useClass: BullConfig, // deve ter o redis para funcionar
-    // }),
     {
       module: DatabaseModule,
       global: true,
