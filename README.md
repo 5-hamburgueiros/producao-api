@@ -48,3 +48,7 @@ Já se estiver utilizando Docker, pode acessar em http://localhost:3333/swagger 
 
 E se estiver utilizando o ambiente de desenvolvimento via `yarn`, basta acessar em http://localhost:3000/swagger e http://localhost:3000/swagger-json .
 
+
+## Demanda
+### Produção
+Responsável por operacionalizar o processo de produção do pedido, acompanhando a fila de pedidos (visão da cozinha), atualização de status de cada passo do pedido.

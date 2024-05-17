@@ -7,7 +7,7 @@ import { Logger, Module, OnApplicationBootstrap } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import comboSeed from './combos-seed';
 import ingredientesSeed from './ingredientes-seed';
-import itensSeed from './itens-seed';
+import itensSeed from './producao-seed';
 @Module({
   imports: [
     TypeOrmModule.forFeature([

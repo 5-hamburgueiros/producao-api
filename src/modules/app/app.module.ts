@@ -8,11 +8,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ComboModule } from '../combo/combo.module';
 import { DatabaseModule } from '../database/database.module';
 import { HealthModule } from '../health/health.module';
-import { IngredienteModule } from '../ingrediente/ingrediente.module';
-import { ItemModule } from '../item/item.module';
+import { ProducaoModule } from '../producao/producao.module';
 import { SeedModule } from '../seed/seed.module';
 
 @Module({
@@ -32,9 +30,7 @@ import { SeedModule } from '../seed/seed.module';
       module: DatabaseModule,
       global: true,
     },
-    IngredienteModule,
-    ItemModule,
-    ComboModule,
+    ProducaoModule,
     SeedModule,
   ],
   providers: [

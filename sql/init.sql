@@ -1,1 +1,1 @@
-CREATE DATABASE [cardapios]
+CREATE DATABASE [producao]
