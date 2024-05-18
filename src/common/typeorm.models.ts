@@ -1,11 +1,7 @@
 import {
-  ComboModelTypeOrm,
-  IngredienteModelTypeOrm,
-  ItemModelTypeOrm,
+  ProducaoModelTypeOrm,
 } from '@/infra/database/typerom/model';
 
 export const typeOrmEntities = [
-  IngredienteModelTypeOrm,
-  ItemModelTypeOrm,
-  ComboModelTypeOrm,
+  ProducaoModelTypeOrm
 ];
