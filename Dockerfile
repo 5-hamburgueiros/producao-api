@@ -3,14 +3,13 @@ FROM node:20.10.0-alpine AS build
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node pnpm-lock.yaml ./
+COPY --chown=node:node yarn.lock ./
 
-RUN npm install -g pnpm
-RUN pnpm install
+RUN yarn install
 
 COPY --chown=node:node . .
 
-RUN pnpm run build
+RUN yarn run build
 
 USER node
 
@@ -20,13 +19,12 @@ WORKDIR /usr/src/app
 ENV NODE_ENV production
 
 COPY --chown=node:node --from=build /usr/src/app/package.json ./
-COPY --chown=node:node --from=build /usr/src/app/pnpm-lock.yaml ./
+COPY --chown=node:node --from=build /usr/src/app/yarn.lock ./
 
-RUN npm install -g pnpm
-RUN pnpm install --prod
+RUN yarn install --prod
 
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
-EXPOSE 80
+EXPOSE 3000
 
 CMD [ "node", "dist/main.js" ]

@@ -3,7 +3,7 @@ import { ApiParam, ApiTags } from "@nestjs/swagger";
 import { ICreateProducao } from '@/domain/use-cases';
 import { CreateProducaoDto } from "../dtos";
 
-@ApiTags('Itens')
+@ApiTags('Produção')
 @Controller('producao')
 export class ProducaoController {
     constructor(
