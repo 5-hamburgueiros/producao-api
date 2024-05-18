@@ -17,6 +17,9 @@ export class ProducaoModelTypeOrm extends AbstractModel {
   @Column({ name: 'Pedido', type: 'uuid' })
   pedido: string;
 
+  @Column({ name: 'Cliente', type: 'uuid' })
+  cliente: string;
+
   @Column({type: 'enum', enum: StatusPedido, default: StatusPedido.EM_ANDAMENTO})
   status: StatusPedido;
 
@@ -24,6 +27,7 @@ export class ProducaoModelTypeOrm extends AbstractModel {
     const model = new ProducaoModelTypeOrm();
     model.id = params.id;
     model.pedido = params.pedido;
+    model.cliente = params.cliente;
     model.status = params.status;
     model.criadoEm = params.criadoEm;
     model.atualizadoEm = params.atualizadoEm;
