@@ -12,6 +12,16 @@ export class CreateProducaoUseCase implements ICreateProducao {
 
   async execute(params: ICreateProducao.Params): Promise<ProducaoEntity> {
 
-    return null;
+    const pedidoModel = new ProducaoEntity({
+      id: undefined,
+      cliente: params.cliente,
+      pedido: params.pedido,
+      dataPedido: params.dataPedido,
+      status: undefined
+    });
+
+    return this.producaoRepository.create({
+      pedido: pedidoModel,
+    });
   }
 }

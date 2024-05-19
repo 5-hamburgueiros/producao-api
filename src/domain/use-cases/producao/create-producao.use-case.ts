@@ -10,6 +10,7 @@ export namespace ICreateProducao {
   export type Params = {
     cliente?: string;
     pedido?: string;
+    dataPedido?: Date;
   };
 
   export type Result = ProducaoEntity;
