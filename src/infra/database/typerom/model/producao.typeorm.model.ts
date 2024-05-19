@@ -20,7 +20,7 @@ export class ProducaoModelTypeOrm extends AbstractModel {
   @Column({ name: 'Cliente', type: 'uuid' })
   cliente: string;
 
-  @Column({type: 'enum', enum: StatusPedido, default: StatusPedido.EM_ANDAMENTO})
+  @Column({type: 'enum', enum: StatusPedido, default: StatusPedido.RECEBIDO})
   status: StatusPedido;
 
   @Column({type: 'timestamptz', nullable: false})
