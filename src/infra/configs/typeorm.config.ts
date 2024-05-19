@@ -30,6 +30,7 @@ export class TypeORMConfig implements IConfig<TypeOrmModuleOptions> {
       },
       namingStrategy: new KeepProvidedNamingStrategy(),
     };
+
     return config;
   }
 }
