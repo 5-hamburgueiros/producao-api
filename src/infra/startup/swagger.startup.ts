@@ -8,7 +8,7 @@ export class SwaggerStartup {
       .setTitle('Tech Challenge - Produção API')
       .setExternalDoc('Exportar documentação', '/swagger-json')
       .setDescription('Sistema de gestão de produção')
-      .addBearerAuth()
+      // .addBearerAuth()
       .setVersion(VERSION);
 
     if (NODE_ENV == 'production') {
