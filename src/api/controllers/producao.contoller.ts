@@ -1,4 +1,16 @@
-import { Body, Controller, DefaultValuePipe, Get, Inject, Param, ParseArrayPipe, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  DefaultValuePipe,
+  Get,
+  Inject,
+  Param,
+  ParseArrayPipe,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { ICreateProducao, IUpdateProducao } from '@/domain/use-cases';
 import { CreateProducaoDto } from '../dtos';
@@ -8,6 +20,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { ProducaoModelTypeOrm } from '@/infra/database/typerom/model';
 import { ProducaoEntity } from '@/domain/entities/producao.entity';
 import { UpdateProducaoDto } from '../dtos/update-producao';
+import { IFindByPedido } from '@/domain/use-cases/producao/find-by-pedido.use-case';
 
 @ApiTags('Produção')
 @Controller('producao')
@@ -17,6 +30,8 @@ export class ProducaoController {
     private readonly createProducao: ICreateProducao,
     @Inject(IUpdateProducao)
     private readonly updateProducao: IUpdateProducao,
+    @Inject(IFindByPedido)
+    private readonly findByPedido: IFindByPedido,
     @Inject(IProducaoService)
     private readonly producaoService: IProducaoService,
   ) {}
@@ -64,7 +79,7 @@ export class ProducaoController {
       },
       {
         status,
-        pedido
+        pedido,
       },
     );
   }
@@ -79,5 +94,16 @@ export class ProducaoController {
     @Body() updateProducaoDto: UpdateProducaoDto,
   ): Promise<ProducaoEntity> {
     return this.updateProducao.execute({ pedido, ...updateProducaoDto });
+  }
+
+  @ApiOperation({
+    summary: 'Recupera os dados da produção de um pedido',
+  })
+  @ApiParam({ name: 'pedido' })
+  @Get(':pedido')
+  async byPedido(
+    @Param('pedido') pedido: string,
+  ): Promise<ProducaoModelTypeOrm> {
+    return this.findByPedido.execute({ pedido });
   }
 }

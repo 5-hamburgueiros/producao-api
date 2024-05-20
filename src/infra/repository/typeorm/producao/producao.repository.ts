@@ -15,4 +15,14 @@ export class ProducaoRepositoryTypeOrm implements IProducaoRepository {
   create(params: IProducaoRepository.Create.Params): Promise<ProducaoEntity> {
     return this.producaoRepository.save(params.producao);
   }
+
+  findByPedido(
+    params: IProducaoRepository.FindByPedido.Params,
+  ): Promise<IProducaoRepository.FindByPedido.Result> {
+    return this.producaoRepository.findOne({
+      where: {
+        pedido: params.pedido,
+      },
+    });
+  }
 }

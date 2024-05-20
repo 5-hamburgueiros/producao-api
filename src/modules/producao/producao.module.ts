@@ -6,9 +6,11 @@ import {
   CreateProducaoUseCase,
   UpdateProducaoUseCase,
 } from '@/application/use-cases';
+import { FindByPedido } from '@/application/use-cases/producao/find-by-pedido.use-case';
 import { IProducaoRepository } from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
 import { ICreateProducao, IUpdateProducao } from '@/domain/use-cases';
+import { IFindByPedido } from '@/domain/use-cases/producao/find-by-pedido.use-case';
 import { ProducaoModelTypeOrm } from '@/infra/database/typerom/model';
 import { ProducaoRepositoryTypeOrm } from '@/infra/repository/typeorm';
 import { Module } from '@nestjs/common';
@@ -29,6 +31,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     {
       provide: IUpdateProducao,
       useClass: UpdateProducaoUseCase,
+    },
+    {
+      provide: IFindByPedido,
+      useClass: FindByPedido,
     },
     {
       provide: IProducaoService,
