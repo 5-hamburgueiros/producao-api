@@ -20,6 +20,7 @@ export class ProducaoRepositoryTypeOrm implements IProducaoRepository {
     params: IProducaoRepository.FindByPedido.Params,
   ): Promise<IProducaoRepository.FindByPedido.Result> {
     return this.producaoRepository.findOne({
+      relations: ['historico'],
       where: {
         pedido: params.pedido,
       },

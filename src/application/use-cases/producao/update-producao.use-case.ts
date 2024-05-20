@@ -1,10 +1,14 @@
 import { DefaultException } from '@/common/exceptions/default.exception';
+import { ProducaoHistoricoEntity } from '@/domain/entities/producao-historico.entity';
 import { ProducaoEntity } from '@/domain/entities/producao.entity';
 import { StatusPedido } from '@/domain/enum';
 import { PedidoLocalizadoException } from '@/domain/exceptions/pedido-localizado.exception';
 import { PedidoNaoLocalizadoException } from '@/domain/exceptions/pedido-nao-localizado.exception';
 import { StatusNaoPermitidoException } from '@/domain/exceptions/status-nao-permitido.exeception';
-import { IProducaoRepository } from '@/domain/repository';
+import {
+  IProducaoHistoricoRepository,
+  IProducaoRepository,
+} from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
 import { IUpdateProducao } from '@/domain/use-cases';
 import {
@@ -18,6 +22,8 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
   constructor(
     @Inject(IProducaoRepository)
     private readonly producaoRepository: IProducaoRepository,
+    @Inject(IProducaoHistoricoRepository)
+    private readonly producaoHistoricoRepository: IProducaoHistoricoRepository,
     @Inject(IProducaoService)
     private readonly producaoService: IProducaoService,
   ) {}
@@ -40,6 +46,16 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
       this.handleStatus(producao, params.status);
 
       const data = await this.producaoRepository.create({ producao: producao });
+
+      const historico = new ProducaoHistoricoEntity({
+        id: undefined,
+        producao: data.id,
+        status: data.status,
+      });
+
+      await this.producaoHistoricoRepository.create({
+        historico,
+      });
 
       return data;
     } catch (error) {

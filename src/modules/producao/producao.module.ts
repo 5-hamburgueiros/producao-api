@@ -7,17 +7,27 @@ import {
   UpdateProducaoUseCase,
 } from '@/application/use-cases';
 import { FindByPedido } from '@/application/use-cases/producao/find-by-pedido.use-case';
-import { IProducaoRepository } from '@/domain/repository';
+import {
+  IProducaoHistoricoRepository,
+  IProducaoRepository,
+} from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
 import { ICreateProducao, IUpdateProducao } from '@/domain/use-cases';
 import { IFindByPedido } from '@/domain/use-cases/producao/find-by-pedido.use-case';
 import { ProducaoModelTypeOrm } from '@/infra/database/typerom/model';
+import { ProducaoHistoricoModelTypeOrm } from '@/infra/database/typerom/model/producao-historico.model';
 import { ProducaoRepositoryTypeOrm } from '@/infra/repository/typeorm';
+import { ProducaoHistoricoRepositoryTypeOrm } from '@/infra/repository/typeorm/producao/producao-historico.repository';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProducaoModelTypeOrm])],
+  imports: [
+    TypeOrmModule.forFeature([
+      ProducaoModelTypeOrm,
+      ProducaoHistoricoModelTypeOrm,
+    ]),
+  ],
   controllers: [ProducaoController],
   providers: [
     {
@@ -39,6 +49,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     {
       provide: IProducaoService,
       useClass: ProducaoService,
+    },
+    {
+      provide: IProducaoHistoricoRepository,
+      useClass: ProducaoHistoricoRepositoryTypeOrm,
     },
   ],
 })
