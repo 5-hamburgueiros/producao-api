@@ -16,11 +16,7 @@ export class TypeORMConfig implements IConfig<TypeOrmModuleOptions> {
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASS,
       database: process.env.DATABASE_NAME,
-      ssl: environment.isDevelopment()
-        ? false
-        : {
-            rejectUnauthorized: false,
-          },
+      ssl: false,
       synchronize: true,
       entities: typeOrmEntities,
       maxQueryExecutionTime: 60000,

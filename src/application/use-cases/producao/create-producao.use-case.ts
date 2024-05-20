@@ -19,8 +19,6 @@ export class CreateProducaoUseCase implements ICreateProducao {
     private readonly producaoRepository: IProducaoRepository,
     @Inject(IProducaoHistoricoRepository)
     private readonly producaoHistoricoRepository: IProducaoHistoricoRepository,
-    @Inject(IProducaoService)
-    private readonly producaoService: IProducaoService,
     @Inject(IPedidoService)
     private readonly pedidoService: IPedidoService,
   ) {}
