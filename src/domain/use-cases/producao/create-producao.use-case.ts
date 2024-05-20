@@ -8,7 +8,6 @@ export const ICreateProducao = Symbol('ICreateProducao');
 
 export namespace ICreateProducao {
   export type Params = {
-    cliente?: string;
     pedido?: string;
     dataPedido?: Date;
   };

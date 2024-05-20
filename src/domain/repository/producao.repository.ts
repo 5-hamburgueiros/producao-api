@@ -9,7 +9,7 @@ export const IProducaoRepository = Symbol('IProducaoRepository');
 export namespace IProducaoRepository {
     export namespace Create {
         export type Params = {
-            pedido: ProducaoEntity;
+            producao: ProducaoEntity;
         };
         export type Result = ProducaoEntity;
     }

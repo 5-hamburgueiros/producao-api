@@ -1,11 +1,13 @@
-import { Body, Controller, DefaultValuePipe, Get, Inject, Param, ParseArrayPipe, ParseIntPipe, Post, Query } from '@nestjs/common';
-import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { ICreateProducao } from '@/domain/use-cases';
+import { Body, Controller, DefaultValuePipe, Get, Inject, Param, ParseArrayPipe, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ICreateProducao, IUpdateProducao } from '@/domain/use-cases';
 import { CreateProducaoDto } from '../dtos';
 import { IProducaoService } from '@/domain/service';
 import { StatusPedido } from '@/domain/enum';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { ProducaoModelTypeOrm } from '@/infra/database/typerom/model';
+import { ProducaoEntity } from '@/domain/entities/producao.entity';
+import { UpdateProducaoDto } from '../dtos/update-producao';
 
 @ApiTags('Produção')
 @Controller('producao')
@@ -13,6 +15,8 @@ export class ProducaoController {
   constructor(
     @Inject(ICreateProducao)
     private readonly createProducao: ICreateProducao,
+    @Inject(IUpdateProducao)
+    private readonly updateProducao: IUpdateProducao,
     @Inject(IProducaoService)
     private readonly producaoService: IProducaoService,
   ) {}
@@ -63,5 +67,17 @@ export class ProducaoController {
         pedido
       },
     );
+  }
+
+  @ApiOperation({
+    summary: 'Atualiza o pedido (simulação de preparo)',
+  })
+  @ApiParam({ name: 'pedido' })
+  @Patch(':pedido')
+  async update(
+    @Param('pedido') pedido: string,
+    @Body() updateProducaoDto: UpdateProducaoDto,
+  ): Promise<ProducaoEntity> {
+    return this.updateProducao.execute({ pedido, ...updateProducaoDto });
   }
 }

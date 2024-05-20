@@ -4,7 +4,6 @@ import { IProducaoRepository } from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
 import { ICreateProducao } from '@/domain/use-cases';
 import { Inject, Injectable } from '@nestjs/common';
-import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 
 @Injectable()
 export class CreateProducaoUseCase implements ICreateProducao {
@@ -29,14 +28,13 @@ export class CreateProducaoUseCase implements ICreateProducao {
 
     const pedidoModel = new ProducaoEntity({
       id: undefined,
-      cliente: params.cliente,
       pedido: params.pedido,
       dataPedido: params.dataPedido,
       status: undefined,
     });
 
     return this.producaoRepository.create({
-      pedido: pedidoModel,
+      producao: pedidoModel,
     });
   }
 }

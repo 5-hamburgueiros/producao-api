@@ -13,6 +13,6 @@ export class ProducaoRepositoryTypeOrm implements IProducaoRepository {
   ) {}
 
   create(params: IProducaoRepository.Create.Params): Promise<ProducaoEntity> {
-    return this.producaoRepository.save(params.pedido);
+    return this.producaoRepository.save(params.producao);
   }
 }
