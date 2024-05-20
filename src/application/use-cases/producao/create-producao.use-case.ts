@@ -1,12 +1,15 @@
 import { ProducaoHistoricoEntity } from '@/domain/entities/producao-historico.entity';
 import { ProducaoEntity } from '@/domain/entities/producao.entity';
 import { PedidoLocalizadoException } from '@/domain/exceptions/pedido-localizado.exception';
+import { PedidoNaoLocalizadoException } from '@/domain/exceptions/pedido-nao-localizado.exception';
 import {
   IProducaoHistoricoRepository,
   IProducaoRepository,
 } from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
+import { IPedidoService } from '@/domain/service/pedido.service';
 import { ICreateProducao } from '@/domain/use-cases';
+import { environment } from '@/infra/configs/environment';
 import { Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -18,17 +21,24 @@ export class CreateProducaoUseCase implements ICreateProducao {
     private readonly producaoHistoricoRepository: IProducaoHistoricoRepository,
     @Inject(IProducaoService)
     private readonly producaoService: IProducaoService,
+    @Inject(IPedidoService)
+    private readonly pedidoService: IPedidoService,
   ) {}
 
   async execute(params: ICreateProducao.Params): Promise<ProducaoEntity> {
-    const result = await this.producaoService.paginate(
-      { limit: 1, page: 1 },
-      {
-        pedido: params.pedido,
-      },
-    );
+    if (environment.isProduction()) {
+      const pedido = await this.pedidoService.get(params.pedido);
 
-    if (result?.meta?.itemCount !== 0) {
+      if (!pedido) {
+        throw new PedidoNaoLocalizadoException('Pedido não encontrado');
+      }
+    }
+
+    const result = await this.producaoRepository.findByPedido({
+      pedido: params.pedido,
+    });
+
+    if (result) {
       throw new PedidoLocalizadoException('Pedido já cadastrado na produção');
     }
 
@@ -52,6 +62,10 @@ export class CreateProducaoUseCase implements ICreateProducao {
     await this.producaoHistoricoRepository.create({
       historico,
     });
+
+    if (environment.isProduction()) {
+      await this.pedidoService.update(params.pedido, data.status);
+    }
 
     return data;
   }

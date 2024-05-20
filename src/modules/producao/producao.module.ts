@@ -2,6 +2,7 @@ import { ProducaoController } from '@/api/controllers/producao.contoller';
 import { JwtGuard } from '@/api/middlewares/auth-guard.strategy';
 import { JwtStrategy } from '@/api/middlewares/jwt.strategy';
 import { ProducaoService } from '@/api/services';
+import { PedidoService } from '@/api/services/pedido.service';
 import {
   CreateProducaoUseCase,
   UpdateProducaoUseCase,
@@ -12,6 +13,7 @@ import {
   IProducaoRepository,
 } from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
+import { IPedidoService } from '@/domain/service/pedido.service';
 import { ICreateProducao, IUpdateProducao } from '@/domain/use-cases';
 import { IFindByPedido } from '@/domain/use-cases/producao/find-by-pedido.use-case';
 import { ProducaoModelTypeOrm } from '@/infra/database/typerom/model';
@@ -49,6 +51,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     {
       provide: IProducaoService,
       useClass: ProducaoService,
+    },
+    {
+      provide: IPedidoService,
+      useClass: PedidoService,
     },
     {
       provide: IProducaoHistoricoRepository,

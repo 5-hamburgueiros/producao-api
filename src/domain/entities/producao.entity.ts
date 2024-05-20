@@ -33,7 +33,6 @@ export class ProducaoEntity extends AbstractEntity {
     }
     this.status = StatusPedido.FINALIZADO;
   }
-
   static FromTypeOrmModel(param: ProducaoModel.Params): ProducaoEntity {
     return new ProducaoEntity({
       id: param.id,

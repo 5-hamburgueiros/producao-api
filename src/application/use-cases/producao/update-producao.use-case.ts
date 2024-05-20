@@ -10,7 +10,9 @@ import {
   IProducaoRepository,
 } from '@/domain/repository';
 import { IProducaoService } from '@/domain/service';
+import { IPedidoService } from '@/domain/service/pedido.service';
 import { IUpdateProducao } from '@/domain/use-cases';
+import { environment } from '@/infra/configs/environment';
 import {
   Inject,
   Injectable,
@@ -26,6 +28,8 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
     private readonly producaoHistoricoRepository: IProducaoHistoricoRepository,
     @Inject(IProducaoService)
     private readonly producaoService: IProducaoService,
+    @Inject(IPedidoService)
+    private readonly pedidoService: IPedidoService,
   ) {}
 
   async execute(params: IUpdateProducao.Params): Promise<ProducaoEntity> {
@@ -56,6 +60,10 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
       await this.producaoHistoricoRepository.create({
         historico,
       });
+
+      if (environment.isProduction()) {
+        await this.pedidoService.update(params.pedido, data.status);
+      }
 
       return data;
     } catch (error) {
