@@ -1,0 +1,2 @@
+export * from './producao.service';
+
