@@ -27,9 +27,8 @@ export class CreateProducaoUseCase implements ICreateProducao {
     if (environment.isProduction()) {
       const pedido = await this.pedidoService.get(params.pedido);
 
-      if (!pedido) {
+      if (!pedido)
         throw new PedidoNaoLocalizadoException('Pedido não encontrado');
-      }
     }
 
     const result = await this.producaoRepository.findByPedido({
