@@ -18,9 +18,8 @@ export class FindByPedido implements IFindByPedido {
       const result = await this.producaoRepository.findByPedido({
         pedido: params.pedido,
       });
-      if (!result) {
+      if (!result)
         throw new PedidoNaoLocalizadoException('Pedido não localizado');
-      }
       return result;
     } catch (error) {
       throw new InternalServerErrorException(error.message);
