@@ -3,7 +3,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const { npm_package_version: VERSION = '0.1.0', NODE_ENV } = process.env;
 export class SwaggerStartup {
-  static init(app: INestApplication) {
+  static init(app: INestApplication, port: number) {
     const config = new DocumentBuilder()
       .setTitle('Tech Challenge - Produção API')
       .setExternalDoc('Exportar documentação', '/swagger-json')
@@ -25,7 +25,7 @@ export class SwaggerStartup {
         'Production server with docker',
       );
     } else {
-      config.addServer('http://localhost:3000', 'Development server');
+      config.addServer(`http://localhost:${port}`, 'Development server');
     }
 
     const document = SwaggerModule.createDocument(app, config.build());
