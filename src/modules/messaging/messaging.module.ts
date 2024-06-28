@@ -1,7 +1,8 @@
-import { StatusPagamentoConsumerService } from '@/api/services/messaging/status-pagamento-consumer.service';
+import { StatusPedidoConsumerService } from '@/api/services/messaging/status-pedido-consumer.service';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ProducaoModule } from '../producao/producao.module';
 
 @Module({
   imports: [
@@ -16,9 +17,10 @@ import { ConfigService } from '@nestjs/config';
       },
       inject: [ConfigService],
     }),
+    ProducaoModule,
   ],
   providers: [
-    StatusPagamentoConsumerService,
+    StatusPedidoConsumerService,
   ]
 })
 export class MessagingModule { }
