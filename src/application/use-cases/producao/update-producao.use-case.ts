@@ -61,9 +61,8 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
         historico,
       });
 
-      if (environment.isProduction()) {
-        await this.pedidoService.update(params.pedido, data.status);
-      }
+      await this.pedidoService.update(params.pedido, data.status);
+
 
       return data;
     } catch (error) {
