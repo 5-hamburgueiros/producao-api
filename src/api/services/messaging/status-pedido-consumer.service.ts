@@ -12,7 +12,7 @@ export class StatusPedidoConsumerService {
   }
 
   @RabbitSubscribe({ queue: 'pedidos_pagos' })
-  public async recebePedidoPago(message: ICreateProducao.Params) {
+  public recebePedidoPago(message: ICreateProducao.Params) {
     console.log(`Received message: ${JSON.stringify(message)}`);
     this.createProducaoUseCase.execute(message)
   }
