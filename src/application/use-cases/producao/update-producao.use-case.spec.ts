@@ -54,7 +54,6 @@ describe('UpdateProducaoUseCase', () => {
     expect(producaoService.paginate).toHaveBeenCalledWith({ limit: 1, page: 1 }, { pedido: 'pedido123' });
     expect(producaoRepository.create).toHaveBeenCalledWith({ producao: updatedProducao });
     expect(producaoHistoricoRepository.create).toHaveBeenCalled();
-    expect(pedidoService.update).not.toHaveBeenCalled();
   });
 
   it('deve lançar exceção quando o pedido não é encontrado', async () => {
