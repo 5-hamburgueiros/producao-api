@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-const { npm_package_version: VERSION = '0.1.0', NODE_ENV } = process.env;
+const { npm_package_version: VERSION = '0.1.0', NODE_ENV, URL_SWAGGER__AWS } = process.env;
 export class SwaggerStartup {
   static init(app: INestApplication, port: number) {
     const config = new DocumentBuilder()
@@ -13,7 +13,7 @@ export class SwaggerStartup {
 
     if (NODE_ENV == 'production') {
       config.addServer(
-        'http://a06c69a4a4a89422aab39ed7f596ecea-335050858.us-east-1.elb.amazonaws.com',
+        URL_SWAGGER__AWS,
         'AWS EKS',
       );
       config.addServer(
