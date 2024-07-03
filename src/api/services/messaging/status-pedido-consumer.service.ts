@@ -12,10 +12,10 @@ export class StatusPedidoConsumerService {
   }
 
   @RabbitSubscribe({ queue: 'pedidos_pagos' })
-  public recebePedidoPago(message: ICreateProducao.Params) {
+  public async recebePedidoPago(message: ICreateProducao.Params) {
     console.log(`Received message: ${JSON.stringify(message)}`);
     try {
-      this.createProducaoUseCase.execute(message);;
+      await this.createProducaoUseCase.execute(message);
     } catch (erro) {
       console.log('erro ao receber pedido:', erro);
     }
