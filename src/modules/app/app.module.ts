@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from '../database/database.module';
 import { HealthModule } from '../health/health.module';
 import { ProducaoModule } from '../producao/producao.module';
+import { MessagingModule } from '../messaging/messaging.module';
 // import { SeedModule } from '../seed/seed.module';
 
 @Module({
@@ -28,6 +29,7 @@ import { ProducaoModule } from '../producao/producao.module';
     },
     ProducaoModule,
     // SeedModule,
+    MessagingModule
   ],
   providers: [
     CorrelationService,
