@@ -25,6 +25,7 @@ export class PedidoService implements IPedidoService {
         status,
       });
     } catch (error) {
+      console.log(error)
       if (error instanceof DefaultException) throw error;
       throw new InternalServerErrorException(error.message);
     }
