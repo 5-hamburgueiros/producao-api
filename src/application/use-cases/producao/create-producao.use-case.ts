@@ -24,12 +24,10 @@ export class CreateProducaoUseCase implements ICreateProducao {
   ) {}
 
   async execute(params: ICreateProducao.Params): Promise<ProducaoEntity> {
-    if (environment.isProduction()) {
-      const pedido = await this.pedidoService.get(params.pedido);
+    const pedido = await this.pedidoService.get(params.pedido);
 
-      if (!pedido)
-        throw new PedidoNaoLocalizadoException('Pedido não encontrado');
-    }
+    if (!pedido)
+      throw new PedidoNaoLocalizadoException('Pedido não encontrado');
 
     const result = await this.producaoRepository.findByPedido({
       pedido: params.pedido,
@@ -60,9 +58,7 @@ export class CreateProducaoUseCase implements ICreateProducao {
       historico,
     });
 
-    if (environment.isProduction()) {
-      await this.pedidoService.update(params.pedido, data.status);
-    }
+    await this.pedidoService.update(params.pedido, data.status);
 
     return data;
   }

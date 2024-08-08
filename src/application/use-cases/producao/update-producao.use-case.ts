@@ -63,9 +63,9 @@ export class UpdateProducaoUseCase implements IUpdateProducao {
 
       await this.pedidoService.update(params.pedido, data.status);
 
-
       return data;
     } catch (error) {
+      console.log(error)
       if (error instanceof DefaultException) throw error;
       throw new InternalServerErrorException(error.message);
     }
